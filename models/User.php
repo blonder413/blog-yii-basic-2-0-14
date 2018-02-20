@@ -27,6 +27,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -48,7 +50,7 @@ class User extends ActiveRecord implements IdentityInterface
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
                 'value' => new Expression('NOW()'),
-            ], 
+            ],
         ];
      }
 
@@ -58,6 +60,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['name', 'username', 'email', 'password_hash', 'photo'], 'required', 'on' => 'create'],
+            [['email'], 'email'],
+            [['file'], 'image', 'extensions' => 'jpg, jpeg'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];

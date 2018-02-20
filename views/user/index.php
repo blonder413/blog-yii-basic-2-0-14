@@ -50,7 +50,40 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} {change-status}',
+                'buttons' => [
+                    'change-status' => function ($url, $model, $key) {
+                        if ($model->status === User::STATUS_DELETED) {
+                            return Html::a('<span class="glyphicon glyphicon-thumbs-up"></span>', $url,
+                                [ 'title' => Yii::t('app', 'Active this user'), ]
+                            );
+                        } elseif ($model->status === User::STATUS_ACTIVE) {
+                            return Html::a('<span class="glyphicon glyphicon-thumbs-down"></span>', $url,
+                                [ 'title' => Yii::t('app', 'Inactive this user'), ]
+                            );
+                        }
+                    },
+                    'update' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url,
+                            [ 'title' => Yii::t('app', 'Actualizar'), ]
+                        );
+                    }
+                ],
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'view') {
+                        return yii\helpers\Url::to(['user/view', 'id' => $key]);
+                    } elseif ($action === 'change-status') {
+                        return yii\helpers\Url::to(['user/change-status', 'id' => $key]);
+                    } elseif ($action == 'update') {
+                        return yii\helpers\Url::to(['user/update/', 'id' => $key]);
+                    } elseif ($action === 'delete') {
+                        return yii\helpers\Url::to(['user/delete/', 'id' => $key]);
+                    }
+                }
+            ],
         ],
         'rowOptions'    => function($model){
             if ($model->status == User::STATUS_DELETED) {
