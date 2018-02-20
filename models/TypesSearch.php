@@ -18,8 +18,8 @@ class TypesSearch extends Type
     public function rules()
     {
         return [
-            [['id', 'created_by', 'updated_by'], 'integer'],
-            [['type', 'created_at', 'updated_at'], 'safe'],
+            [['id'], 'integer'],
+            [['type', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'safe'],
         ];
     }
 
@@ -44,6 +44,13 @@ class TypesSearch extends Type
         $query = Type::find();
 
         // add conditions that should always apply here
+        $query->joinWith(['createdBy as user_created' => function ($q) {
+            $q->andFilterWhere(['=', 'user_created.username', $this->createdBy]);
+        }]);
+
+        $query->joinWith(['updatedBy as user_updated' => function ($q) {
+            $q->andFilterWhere(['=', 'user_updated.username', $this->updatedBy]);
+        }]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,13 +67,15 @@ class TypesSearch extends Type
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_by' => $this->created_by,
+            //'created_by' => $this->created_by,
             'created_at' => $this->created_at,
-            'updated_by' => $this->updated_by,
+            //'updated_by' => $this->updated_by,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'type', $this->type]);
+        $query->andFilterWhere(['like', 'type', $this->type])
+              ->andFilterWhere(['like', 'user_created.name', $this->created_by])
+              ->andFilterWhere(['like', 'user_updated.name', $this->updated_by]);
 
         return $dataProvider;
     }

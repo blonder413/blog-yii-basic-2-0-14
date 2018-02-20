@@ -156,7 +156,15 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        try {
+          $model = $this->findModel($id);
+          if ( $model->delete() ) {
+            unlink('img/users/' . $model->photo);
+          }
+          Yii::$app->session->setFlash('success', Yii::t('app', 'User deleted successfully'));
+        } catch(\Exception $e) {
+          Yii::$app->session->setFlash('warning', Yii::t('app', "User can't be deleted"));
+        }
 
         return $this->redirect(['index']);
     }
