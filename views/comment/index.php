@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //['class' => 'yii\grid\ActionColumn'],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{update} {delete} {approve}',
+                'template' => '{view} {update} {delete} {approve}',
                 'buttons' => [
                     'approve' => function ($url, $model, $key) {
                         if ($model->status === 0) {
@@ -71,6 +71,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return yii\helpers\Url::to(['comment/update/', 'id' => $key]);
                     } elseif ($action === 'delete') {
                         return yii\helpers\Url::to(['comment/delete/', 'id' => $key]);
+                    } elseif ($action === 'view') {
+                        return yii\helpers\Url::to(['comment/view/', 'id' => $key]);
                     }
                 }
             ],

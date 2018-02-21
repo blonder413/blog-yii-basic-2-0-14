@@ -82,7 +82,7 @@ $this->params['most_visited'] = $most_visited;
                 ]
             ) ?>
             <?= Html::a(
-                "Comentarios <span class='badge'>$value->countComments</span>",
+                "Comentarios <span class='badge'>$value->commentsCount</span>",
                 ['/articulo/' . Html::encode("{$value->slug}") . '#comments'],
                 [
                     'class' => 'btn btn-success btn-sm',
