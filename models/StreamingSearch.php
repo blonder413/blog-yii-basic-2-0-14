@@ -19,7 +19,7 @@ class StreamingSearch extends Streaming
     {
         return [
             [['id', 'created_by', 'updated_by'], 'integer'],
-            [['title', 'description', 'embed', 'start', 'created_at', 'updated_at'], 'safe'],
+            [['title', 'description', 'embed', 'start', 'end', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -60,7 +60,7 @@ class StreamingSearch extends Streaming
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'start' => $this->start,
+            //'start' => $this->start,
             'created_by' => $this->created_by,
             'created_at' => $this->created_at,
             'updated_by' => $this->updated_by,
@@ -69,7 +69,9 @@ class StreamingSearch extends Streaming
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'embed', $this->embed]);
+            ->andFilterWhere(['like', 'embed', $this->embed])
+            ->andFilterWhere(['like', 'start', $this->start])
+            ->andFilterWhere(['like', 'end', $this->end]);
 
         return $dataProvider;
     }

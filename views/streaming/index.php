@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StreamingSearch */
@@ -29,7 +30,38 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             'embed',
-            'start',
+            //'start',
+            [
+                'attribute' => 'start',
+                'filter'    => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'start',
+                    //'template' => '{addon}{input}',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            //'format' => 'dd-M-yyyy',
+                            'format' => 'yyyy-mm-dd',
+                        ]
+                ]),
+                'format'    => 'raw',
+                'value'     => 'start',
+            ],
+            //'end',
+            [
+                'attribute' => 'end',
+                'filter'    => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'end',
+                    //'template' => '{addon}{input}',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            //'format' => 'dd-M-yyyy',
+                            'format' => 'yyyy-mm-dd',
+                        ]
+                ]),
+                'format'    => 'raw',
+                'value'     => 'end',
+            ],
             //'created_by',
             //'created_at',
             //'updated_by',

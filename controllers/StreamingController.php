@@ -64,15 +64,46 @@ class StreamingController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Streaming();
+      $model = new Streaming();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+      if ($model->load(Yii::$app->request->post())) {
+          $transaction = Yii::$app->db->beginTransaction();
+          try {
+//                setlocale(LC_ALL,"es_CO");
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+//                $query = "SET lc_time_names = 'es_CO';";
+//                $stmt = $this->connexion->query($query);
+
+              if ($model->save()) {
+                  Yii::$app->session->setFlash("success","Streaming created successfully!");
+              } else {
+                  $errors = '';
+                  foreach ($model->getErrors() as $key => $value) {
+                      foreach ($value as $row => $field) {
+                          //Yii::$app->session->setFlash("danger", $field);
+                          $errors .= $field . "<br>";
+                      }
+                  }
+                  Yii::$app->session->setFlash("danger", $errors);
+              }
+
+              $transaction->commit();
+
+              return $this->redirect(['index']);
+          } catch (\Exception $e) {
+              $transaction->rollBack();
+              throw $e;
+          }
+
+      } else {
+          return $this->render('create', [
+              'model' => $model,
+          ]);
+      }
+
+      return $this->render('create', [
+          'model' => $model,
+      ]);
     }
 
     /**
@@ -86,13 +117,29 @@ class StreamingController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if ($model->load(Yii::$app->request->post())) {
+          if ($model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Streaming updated successfully'));
+          } else {
+            $errors = '<ul>';
+                foreach ($model->getErrors() as $key => $value) {
+                    foreach ($value as $row => $field) {
+                        //Yii::$app->session->setFlash("danger", $field);
+                        $errors .= "<li>" . $field . "</li>";
+                    }
+                }
+                $errors .= '</ul>';
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+                //print_r($errors);exit;
+                Yii::$app->session->setFlash("danger", $errors);
+          }
+
+          return $this->redirect(['index']);
+      }
+
+      return $this->render('update', [
+          'model' => $model,
+      ]);
     }
 
     /**
@@ -104,9 +151,24 @@ class StreamingController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+      try{
+        if($this->findModel($id)->delete()) {
+          Yii::$app->session->setFlash("success", Yii::t('app', "Streaming deleted successfully!"));
+        } else {
+          $errors = '';
+          foreach ($model->getErrors() as $key => $value) {
+              foreach ($value as $row => $field) {
+                  //Yii::$app->session->setFlash("danger", $field);
+                  $errors .= $field . "<br>";
+              }
+          }
+          Yii::$app->session->setFlash("danger", $errors);
+        }
+      } catch (\Exception $e) {
+        Yii::$app->session->setFlash("warning", Yii::t('app', "Streaming can't be deleted!"));
+      }
 
-        return $this->redirect(['index']);
+      return $this->redirect(['index']);
     }
 
     /**

@@ -12,15 +12,16 @@ use Yii;
  * @property string $description
  * @property string $embed
  * @property string $start
+ * @property string $end
  * @property int $created_by
  * @property string $created_at
  * @property int $updated_by
  * @property string $updated_at
  *
- * @property Users $createdBy
- * @property Users $updatedBy
+ * @property User $createdBy
+ * @property User $updatedBy
  */
-class Streaming extends \yii\db\ActiveRecord
+class Streaming extends MyActiveRecord
 {
     /**
      * @inheritdoc
@@ -36,9 +37,18 @@ class Streaming extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'start', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'required'],
+            [['title', 'description', 'start', 'end'], 'required'],
             [['description'], 'string'],
-            [['start', 'created_at', 'updated_at'], 'safe'],
+            [['start', 'end', 'created_at', 'updated_at'], 'safe'],
+            [
+              ['start'], 'compare', 'compareAttribute' => 'end', 'operator' => '<',
+              //'when' => function($model){
+              //  return $this->start < $this->end;
+              //},
+              //'whenClient'  => "function (attribute, value) {
+              //  return $('#streaming-start').val() < $('#streaming-end').val();
+              //}"
+            ],
             [['created_by', 'updated_by'], 'integer'],
             [['title'], 'string', 'max' => 100],
             [['embed'], 'string', 'max' => 255],
@@ -58,6 +68,7 @@ class Streaming extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'embed' => Yii::t('app', 'Embed'),
             'start' => Yii::t('app', 'Start'),
+            'end' => Yii::t('app', 'End'),
             'created_by' => Yii::t('app', 'Created By'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_by' => Yii::t('app', 'Updated By'),

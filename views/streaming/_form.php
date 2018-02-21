@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Streaming */
@@ -18,15 +19,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'embed')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'start')->textInput() ?>
+    <?= $form->field($model, 'start')->widget(DateTimePicker::classname(), [
+			'options' => ['placeholder' => 'Enter when start the streaming ...'],
+			'pluginOptions' => [
+				'autoclose' => true
+			]
+		]); ?>
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+		<?= $form->field($model, 'end')->widget(DateTimePicker::classname(), [
+			'options' => ['placeholder' => 'Enter when end the streaming ...'],
+			'pluginOptions' => [
+				'autoclose' => true
+			]
+		]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
