@@ -17,13 +17,13 @@ class m180219_215825_create_articles_table extends Migration
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_spanish_ci ENGINE=InnoDB';
         }
-        
+
         $this->createTable('{{articles}}', [
             'id'                => $this->primaryKey(),
             'number'            => $this->smallInteger(),
             'title'             => $this->string(150)->notNull()->unique(),
             'slug'              => $this->string(150)->notNull(),
-            'topic'             => $this->string(100)->notNull(),
+            'topic'             => $this->string(100),
             'detail'            => $this->text()->notNull(),
             'abstract'          => $this->string(300)->notNull(),
             'video'             => $this->string(255),
@@ -40,23 +40,23 @@ class m180219_215825_create_articles_table extends Migration
             'updated_by'        => $this->integer()->notNull(),
             'updated_at'        => $this->dateTime()->notNull(),
         ], $tableOptions);
-        
+
         $this->addForeignKey(
             'categoryarticle', 'articles', 'category_id', 'categories', 'id', 'no action', 'no action'
         );
-        
+
         $this->addForeignKey(
             'coursearticle', 'articles', 'course_id', 'courses', 'id', 'no action', 'no action'
         );
-        
+
         $this->addForeignKey(
             'typearticle', 'articles', 'type_id', 'types', 'id', 'no action', 'no action'
         );
-        
+
         $this->addForeignKey(
             'usercreatearticle', 'articles', 'created_by', 'users', 'id', 'no action', 'no action'
         );
-        
+
         $this->addForeignKey(
             'userupdatearticle', 'articles', 'updated_by', 'users', 'id', 'no action', 'no action'
         );

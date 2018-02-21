@@ -19,6 +19,7 @@ class SeedController extends Controller
       $transaction = Yii::$app->db->beginTransaction();
 
       try {
+        // -- ------------------------------------- Users --------------------------------------------
         $this->stdout("inserting registers for users table\n", Console::FG_YELLOW);
           for ($i=0; $i <10; $i++) {
               Yii::$app->db->createCommand()->batchInsert('users',
@@ -46,6 +47,7 @@ class SeedController extends Controller
 
           //$this->stdout("Users inserted\n", Console::BOLD);
           $this->stdout("inserted registers for users table\n", Console::FG_GREEN);
+          // -- ------------------------------------- Categories --------------------------------------------
           $this->stdout("inserting registers for categories table\n", Console::FG_YELLOW);
           for ($i=0; $i <10; $i++){
 
@@ -70,6 +72,32 @@ class SeedController extends Controller
           }
 
           $this->stdout("inserted registers for categories table\n", Console::FG_GREEN);
+          // -- ------------------------------------- Courses --------------------------------------------
+          $this->stdout("inserting registers for courses table\n", Console::FG_YELLOW);
+          for ($i=0; $i <10; $i++){
+
+              Yii::$app->db->createCommand()->batchInsert('courses',
+                  [
+                      'course', 'slug', 'description', 'image',
+                      'created_by', 'created_at', 'updated_by', 'updated_at'
+                  ],
+                  [
+                      [
+                          $faker->unique()->word,
+                          $faker->unique()->slug,
+                          $faker->text(200),
+                          'image-' . $i . '.png',
+                          $faker->numberBetween(1,10),
+                          new Expression('NOW()'),
+                          $faker->numberBetween(1,10),
+                          new Expression('NOW()')
+                      ],
+                  ]
+              )->execute();
+          }
+
+          $this->stdout("inserted registers for courses table\n", Console::FG_GREEN);
+          // -- ------------------------------------- Types --------------------------------------------
           $this->stdout("inserting registers for types table\n", Console::FG_YELLOW);
 
           for ($i=0; $i <3; $i++) {
@@ -92,6 +120,7 @@ class SeedController extends Controller
           }
 
           $this->stdout("inserted registers for types table\n", Console::FG_GREEN);
+          // -- ------------------------------------- Articles --------------------------------------------
           $this->stdout("inserting registers for articles table\n", Console::FG_YELLOW);
 
           $video = '<iframe width="560" height="315" src="https://www.youtube.com/embed/h371D0W46Dk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
@@ -130,6 +159,7 @@ class SeedController extends Controller
           }
 
           $this->stdout("inserted registers for articles table\n", Console::FG_GREEN);
+          // -- ------------------------------------- Comments --------------------------------------------
           $this->stdout("inserting registers for comments table\n", Console::FG_YELLOW);
 
           for ($i=0; $i <100; $i++){

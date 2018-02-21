@@ -1,10 +1,16 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\ckeditor\CKEditor;
+use kartik\select2\Select2;
+use app\models\Category;
+use app\models\Course;
+use app\models\Type;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Article */
+/* @var $model backend\models\Article */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -18,21 +24,45 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'topic')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
+    <?php echo $form->field($model, 'detail')->widget(CKEditor::className(), [
+            'options' => ['rows' => 6],
+            //'preset' => 'basic',   // basic | complete
+    ]); ?>
 
-    <?= $form->field($model, 'abstract')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'abstract')->textarea(['rows' => 2]) ?>
 
-    <?= $form->field($model, 'video')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'video')->textarea(['rows' => 2]) ?>
 
-    <?= $form->field($model, 'type_id')->textInput() ?>
+    <?= $form->field($model, 'type_id')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(Type::find()->all(), 'id', 'type'),
+            'language' => 'es',
+            'options' => ['placeholder' => 'Select a type ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+    ]); ?>
 
     <?= $form->field($model, 'download')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
+    <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(Category::find()->all(), 'id', 'category'),
+            'language' => 'es',
+            'options' => ['placeholder' => 'Select a category ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+    ]); ?>
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'course_id')->textInput() ?>
+    <?= $form->field($model, 'course_id')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(Course::find()->all(), 'id', 'course'),
+            'language' => 'es',
+            'options' => ['placeholder' => 'Select a course ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

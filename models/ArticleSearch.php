@@ -47,6 +47,30 @@ class ArticleSearch extends Article
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder'      => [
+                    'created_at'    => SORT_DESC,
+                    'title'         => SORT_ASC,
+                ],
+                'attributes'    => [
+                    'title',
+                    'created_at',
+                    'visit_counter',
+                    'download_counter',
+                    //'commentsCount',
+                    'category_id'   => [
+                        'asc'   => ['categories.category' => SORT_ASC],
+                        'desc'   => ['categories.category' => SORT_DESC],
+                    ],
+                    'course_id'   => [
+                        'asc'   => ['courses.course' => SORT_ASC],
+                        'desc'   => ['courses.course' => SORT_DESC],
+                    ]
+                ]
+            ],
         ]);
 
         $this->load($params);

@@ -45,6 +45,33 @@ class ArticleController extends Controller
     }
 
     /**
+     * Updates status for an existing Article model.
+     * If update is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionChangeStatus($id)
+    {
+      $model = $this->findModel($id);
+
+      if ($model->status == $model::STATUS_INACTIVE) {
+          $model->status = $model::STATUS_ACTIVE;
+      } elseif ($model->status == $model::STATUS_ACTIVE) {
+          $model->status = $model::STATUS_INACTIVE;
+      }
+
+      if ($model->save()) {
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Article udpated successfully'));
+      } else {
+        print_r($model->getErrors());
+        exit;
+      }
+
+      return $this->redirect(['index']);
+    }
+
+    /**
      * Displays a single Article model.
      * @param integer $id
      * @return mixed
@@ -64,15 +91,52 @@ class ArticleController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Article();
+      $model = new Article();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+      if ($model->load(Yii::$app->request->post())) {
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+//            $transaction = Article::getDb()->beginTransaction();
+          $transaction = Yii::$app->db->beginTransaction();
+
+          try {
+
+//                setlocale(LC_ALL,"es_CO");
+
+//                $query = "SET lc_time_names = 'es_CO';";
+//                $stmt = $this->connexion->query($query);
+
+              $model->detail = html_entity_decode($model->detail);
+
+//                $model->updated_by = Yii::$app->user->id;
+//                $model->updated_at = new \yii\db\Expression('NOW()');
+
+              if ($model->save()) {
+                  Yii::$app->session->setFlash("success","Article created successfully!");
+              } else {
+                  $errors = '';
+                  foreach ($model->getErrors() as $key => $value) {
+                      foreach ($value as $row => $field) {
+                          //Yii::$app->session->setFlash("danger", $field);
+                          $errors .= $field . "<br>";
+                      }
+                  }
+
+                  Yii::$app->session->setFlash("danger", $errors);
+              }
+
+              $transaction->commit();
+
+              return $this->redirect(['index']);
+          } catch (\Exception $e) {
+              $transaction->rollBack();
+              throw $e;
+          }
+
+      } else {
+          return $this->render('create', [
+              'model' => $model,
+          ]);
+      }
     }
 
     /**
@@ -87,7 +151,7 @@ class ArticleController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -104,7 +168,23 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        try{
+          $model = $this->findModel($id);
+          if($model->delete()) {
+            Yii::$app->session->setFlash("success", Yii::t('app', "Article deleted successfully!"));
+          } else {
+            $errors = '';
+            foreach ($model->getErrors() as $key => $value) {
+                foreach ($value as $row => $field) {
+                    //Yii::$app->session->setFlash("danger", $field);
+                    $errors .= $field . "<br>";
+                }
+            }
+            Yii::$app->session->setFlash("danger", $errors);
+          }
+        } catch (\Exception $e) {
+          Yii::$app->session->setFlash("warning", Yii::t('app', "Article can't be deleted!"));
+        }
 
         return $this->redirect(['index']);
     }
