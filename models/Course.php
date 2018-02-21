@@ -27,7 +27,7 @@ use yii\db\Expression;
 class Course extends ActiveRecord
 {
     public $file;
-    
+
     /**
      * @inheritdoc
      */
@@ -42,12 +42,13 @@ class Course extends ActiveRecord
     public function rules()
     {
         return [
-            [['course', 'slug', 'description', 'image', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'required'],
+            [['course', 'description', 'image'], 'required', 'on' => 'create'],
             [['description'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['course', 'slug'], 'string', 'max' => 100],
-            [['image'], 'string', 'max' => 50],
+            //[['image'], 'string', 'max' => 50],
+            [['file'], 'image', 'extensions' => 'png'],
             [['course'], 'unique'],
             [['slug'], 'unique'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -72,7 +73,7 @@ class Course extends ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
-    
+
     public function behaviors()
     {
         return [

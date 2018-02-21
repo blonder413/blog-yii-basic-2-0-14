@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\bootstrap\Modal;
+use app\models\Course;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CourseSearch */
@@ -16,7 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Course'), ['create'], ['class' => 'btn btn-success']) ?>
+      <?php
+      Modal::begin([
+        'header'  => '<h2>' . Yii::t('app', 'Create Course') . '</h2>',
+        'toggleButton'  => ['label' => Yii::t('app', 'Create Course'), 'class' => 'btn btn-success']
+      ]);
+
+      echo $this->render('/course/create', ['model' => new Course()]);
+
+      Modal::end();
+      ?>
     </p>
 
     <?= GridView::widget([
