@@ -35,6 +35,25 @@ class TypeController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Type();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+              Yii::$app->session->setFlash("success", Yii::t('app', "Type createed successfully!"));
+            } else {
+                $errors = '';
+                foreach ($model->getErrors() as $key => $value) {
+                    foreach ($value as $row => $field) {
+                        //Yii::$app->session->setFlash("danger", $field);
+                        $errors .= $field . "<br>";
+                    }
+                }
+                Yii::$app->session->setFlash("danger", $errors);
+            }
+
+            $model = new Type();
+        }
+
         $searchModel = new TypesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -104,8 +123,22 @@ class TypeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        try{
+          if($this->findModel($id)->delete()) {
+            Yii::$app->session->setFlash("success", Yii::t('app', "Type deleted successfully!"));
+          } else {
+            $errors = '';
+            foreach ($model->getErrors() as $key => $value) {
+                foreach ($value as $row => $field) {
+                    //Yii::$app->session->setFlash("danger", $field);
+                    $errors .= $field . "<br>";
+                }
+            }
+            Yii::$app->session->setFlash("danger", $errors);
+          }
+        } catch (\Exception $e) {
+          Yii::$app->session->setFlash("warning", Yii::t('app', "Type can't be deleted!"));
+        }
         return $this->redirect(['index']);
     }
 

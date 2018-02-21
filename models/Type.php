@@ -35,6 +35,7 @@ class Type extends MyActiveRecord
     {
         return [
             [['type'], 'required'],
+            [['type'], 'unique'],
             [['created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['type'], 'string', 'max' => 50],
