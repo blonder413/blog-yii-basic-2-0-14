@@ -18,8 +18,8 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['id', 'created_by', 'updated_by'], 'integer'],
-            [['category', 'slug', 'image', 'description', 'created_at', 'updated_at'], 'safe'],
+            [['id'], 'integer'],
+            [['category', 'slug', 'image', 'description', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -44,6 +44,13 @@ class CategorySearch extends Category
         $query = Category::find();
 
         // add conditions that should always apply here
+        $query->joinWith(['createdBy as user_created' => function ($q) {
+            $q->andFilterWhere(['=', 'user_created.username', $this->createdBy]);
+        }]);
+
+        $query->joinWith(['updatedBy as user_updated' => function ($q) {
+            $q->andFilterWhere(['=', 'user_updated.username', $this->updatedBy]);
+        }]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,16 +67,18 @@ class CategorySearch extends Category
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_by' => $this->created_by,
+            //'created_by' => $this->created_by,
             'created_at' => $this->created_at,
-            'updated_by' => $this->updated_by,
+            //'updated_by' => $this->updated_by,
             'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'category', $this->category])
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'user_created.name', $this->created_by])
+            ->andFilterWhere(['like', 'user_updated.name', $this->updated_by]);
 
         return $dataProvider;
     }

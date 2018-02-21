@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\bootstrap\Modal;
+use app\models\Category;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CategorySearch */
@@ -16,7 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Category'), ['create'], ['class' => 'btn btn-success']) ?>
+      <?php
+      Modal::begin([
+        'header'  => '<h2>' . Yii::t('app', 'Create Category') . '</h2>',
+        'toggleButton'  => ['label' => Yii::t('app', 'Create Category'), 'class' => 'btn btn-success']
+      ]);
+
+      echo $this->render('/category/create', ['model' => new Category()]);
+
+      Modal::end();
+      ?>
     </p>
 
     <?= GridView::widget([
@@ -25,11 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'category',
-            'slug',
+            //'slug',
             //'image',
             'description',
+            'countArticles',
             [
                 'attribute' => 'created_by',
                 'value'     => 'createdBy.name',

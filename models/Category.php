@@ -26,6 +26,8 @@ use Yii;
  */
 class Category extends ActiveRecord
 {
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -40,11 +42,14 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
-            [['category', 'description'], 'required'],
+            [['category', 'description', 'image'], 'required', 'on' => 'create'],
             [['created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['category', 'slug'], 'string', 'max' => 100],
-            [['image'], 'string', 'max' => 50],
+            //[['image'], 'string', 'max' => 50],
+            [['file'], 'image', 'extensions' => 'png'],
+            [['category'], 'unique'],
+            [['slug'], 'unique'],
             [['description'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
@@ -68,7 +73,7 @@ class Category extends ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
-    
+
     public function behaviors()
     {
         return [
@@ -99,6 +104,14 @@ class Category extends ActiveRecord
     public function getArticles()
     {
         return $this->hasMany(Articles::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCountArticles()
+    {
+        return $this->hasMany(Article::className(), ['category_id' => 'id'])->count();
     }
 
     /**
