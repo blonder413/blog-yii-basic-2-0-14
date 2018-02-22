@@ -62,7 +62,7 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
+        ],// add authManager to /config/console.php too
         'authManager'       => [
             'class'         => 'yii\rbac\DbManager',
             'defaultRoles'  => ['guest'],
@@ -88,26 +88,7 @@ $config = [
                 'pdf/<slug>'                => 'site/pdf',
                 'portafolio'                => 'site/portfolio',
                 'en-vivo'                   => 'site/streaming',
-//                'usuario/new-password/<token:\w+>'      => 'site/new-password',
                 'DELETE <controller:\w+>/<id:\d+>' => '<controller>/delete',
-//                'pattern' => 'sitemap', 'route' => 'sitemap/default/index', 'suffix' => '.xml'
-                'sitemap.xml'               => 'sitemap/default/index',
-                ['pattern' => '<id:rss>', 'route' => 'rss/default/index', 'suffix' => '.xml'],
-//                'curso/<id:\d{4}>/items-list' => 'curse/items-list',    // parámetro numérico de 4 dígitos: id
-//                'news/<category:\w+>/items-list' => 'test-rules/items-list',    // parámetro texto: category
-
-//                'news/<year:\d{4}>/items-list' => 'news/items-list',
-//                [
-//                    'pattern' => 'news/<category:\w+>/items-list',
-//                    'route' => 'news/items-list',
-//                    'defaults' => ['category' => 'shopping']
-//                ]
-/*
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-                '<controller:\w+\-\w+>/<id:\d+>' => '<controller>/view',
- */
 
             ],
         ],

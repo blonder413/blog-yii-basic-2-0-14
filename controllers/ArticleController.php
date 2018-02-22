@@ -167,7 +167,7 @@ class ArticleController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ( !\Yii::$app->user->can('admin') and !\Yii::$app->user->can('article-update', ['article' => $model])) {
+        if ( !\Yii::$app->user->can('article-admin') and !\Yii::$app->user->can('article-update', ['article' => $model])) {
             throw new ForbiddenHttpException("Access denied");
         }
 

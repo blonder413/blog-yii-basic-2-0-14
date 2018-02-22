@@ -1,22 +1,48 @@
 ### Installation
+```
+git clone https://github.com/blonder413/blog-yii-advanced-2-0-14
+cd blog-yii-advanced-2-0-14/
+php init
+composer install
+```
 
 rename ```config/db-example.php``` to ```config/db.php``` and use real data,
 rename ```config/mailer-example.php``` to ```config/mailer.php``` and use real data,
 rename ```config/params-example.php``` to ```config/params.php``` and use real data.
 
-### Migration y Seeder
+### Database and Seeder
 
-```php
+Configure db Connection in ```config/db.php``` and
+use the follow commands to create the project and RBAC tables
+
+```
 ./yii migrate
-./yii seed
+yii migrate --migrationPath=@yii/rbac/migrations
 ```
 
-The seeds are in commands/SeedController, you can modifidy the index methos as you like
+The ```commands/SeedController``` file contains the seeder configuration
+you can modify this file for add seeder to new tables
+
+If you want to execute the seeder you have to run the console command
+
+```
+./yii seed
+```
 
 If you want insert roles and premissions by default, you have to run the following commands
 
 ```
 ./yii seed/rbac
+```
+
+### Layouts
+
+The layout configuration is in ```config\main.php```
+```layout``` key.
+The CSS files for frontend layouts is en ```web\css\layout_name```
+where ```layout_name``` is the name of the folder layout in ```views\layouts```
+The images for layouts must be in ```web\img``` folder
+
 
 ### Extensions
 
@@ -35,6 +61,31 @@ composer require kartik-v/yii2-widget-select2 "@dev"
 ```
 composer require 2amigos/yii2-ckeditor-widget
 ```
+
+- yii2-widget-datetimepicker (https://github.com/kartik-v/yii2-widget-datetimepicker)
+
+```
+composer require kartik-v/yii2-widget-datetimepicker "*"
+```
+
+- Bootstrap DateTimePicker Widget for Yii2 (https://github.com/2amigos/yii2-date-time-picker-widget)
+
+```
+composer require 2amigos/yii2-date-time-picker-widget:~1.0
+```
+
+- Bootstrap DatePicker Widget for Yii2 (https://github.com/2amigos/yii2-date-picker-widget)
+
+```
+composer require 2amigos/yii2-date-picker-widget:~1.0
+```
+
+- yii2-widget-alert (https://github.com/kartik-v/yii2-widget-alert)
+
+```
+composer require kartik-v/yii2-widget-alert "*"
+```
+
 
 --------------------------------------------------------
 
