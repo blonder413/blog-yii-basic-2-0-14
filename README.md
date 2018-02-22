@@ -13,6 +13,11 @@ rename ```config/params-example.php``` to ```config/params.php``` and use real d
 
 The seeds are in commands/SeedController, you can modifidy the index methos as you like
 
+If you want insert roles and premissions by default, you have to run the following commands
+
+```
+./yii seed/rbac
+
 ### Extensions
 
 Extensions is only a reference for other applications,
