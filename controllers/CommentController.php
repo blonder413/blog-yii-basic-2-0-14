@@ -6,6 +6,7 @@ use Yii;
 use app\models\Comment;
 use app\models\CommentSearch;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -28,15 +29,20 @@ class CommentController extends Controller
             ],
         ];
     }
-    
+
     /**
      * Change the status to ACTIVE
      * @return mixed
      */
-    public function actionApprove($id){
+    public function actionApprove($id)
+    {
+        if ( !\Yii::$app->user->can('comment-change-status')) {
+          throw new ForbiddenHttpException("Access denied");
+        }
+
         $comment = Comment::findOne($id);
         $comment->status = Comment::STATUS_ACTIVE;
-        
+
         if ($comment->save()) {
           Yii::$app->session->setFlash("success", "Comentario aprobado exitosamente!");
         } else {
@@ -47,7 +53,7 @@ class CommentController extends Controller
                     $errors .= $field . "<br>";
                 }
             }
-                    
+
             //print_r($errors);exit;
             Yii::$app->session->setFlash("danger", $errors);
         }
@@ -61,6 +67,10 @@ class CommentController extends Controller
      */
     public function actionIndex()
     {
+        if ( !\Yii::$app->user->can('comment-list')) {
+          throw new ForbiddenHttpException("Access denied");
+        }
+
         $searchModel = new CommentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -78,6 +88,10 @@ class CommentController extends Controller
      */
     public function actionView($id)
     {
+        if ( !\Yii::$app->user->can('comment-view')) {
+          throw new ForbiddenHttpException("Access denied");
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -90,6 +104,10 @@ class CommentController extends Controller
      */
     public function actionCreate()
     {
+        if ( !\Yii::$app->user->can('comment-create')) {
+          throw new ForbiddenHttpException("Access denied");
+        }
+
         $model = new Comment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -110,6 +128,10 @@ class CommentController extends Controller
      */
     public function actionUpdate($id)
     {
+        if ( !\Yii::$app->user->can('comment-update')) {
+          throw new ForbiddenHttpException("Access denied");
+        }
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -130,6 +152,10 @@ class CommentController extends Controller
      */
     public function actionDelete($id)
     {
+        if ( !\Yii::$app->user->can('comment-delete')) {
+          throw new ForbiddenHttpException("Access denied");
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

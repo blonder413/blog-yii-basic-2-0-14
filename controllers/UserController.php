@@ -7,6 +7,7 @@ use app\models\User;
 use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\Helper;
@@ -37,6 +38,10 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        if ( !\Yii::$app->user->can('user-admin')) {
+            throw new ForbiddenHttpException("Access denied");
+        }
+
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,8 +59,13 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        if ( !\Yii::$app->user->can('user-admin') and !\Yii::$app->user->can('user-view', ['user' => $model])) {
+            throw new ForbiddenHttpException("Access denied");
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -66,6 +76,10 @@ class UserController extends Controller
      */
      public function actionCreate()
      {
+         if ( !\Yii::$app->user->can('user-admin')) {
+             throw new ForbiddenHttpException("Access denied");
+         }
+
          $model = new User(['scenario' => 'create']);
 
          if ($model->load(Yii::$app->request->post())) {
@@ -112,6 +126,10 @@ class UserController extends Controller
      */
     public function actionChangeStatus($id)
     {
+      if ( !\Yii::$app->user->can('user-change-status')) {
+          throw new ForbiddenHttpException("Access denied");
+      }
+
       $model = $this->findModel($id);
 
       if ($model->status === $model::STATUS_DELETED) {
@@ -138,6 +156,10 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
+        if ( !\Yii::$app->user->can('user-admin') and !\Yii::$app->user->can('user-update', ['user' => $model])) {
+            throw new ForbiddenHttpException("Access denied");
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -156,10 +178,24 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
+
+        if ( !\Yii::$app->user->can('user-admin')) {
+            throw new ForbiddenHttpException("Access denied");
+        }
+
         try {
-          $model = $this->findModel($id);
           if ( $model->delete() ) {
             unlink('img/users/' . $model->photo);
+          } else {
+            $errors = '';
+            foreach ($model->getErrors() as $key => $value) {
+                foreach ($value as $row => $field) {
+                    //Yii::$app->session->setFlash("danger", $field);
+                    $errors .= $field . "<br>";
+                }
+            }
+            Yii::$app->session->setFlash("danger", $errors);
           }
           Yii::$app->session->setFlash('success', Yii::t('app', 'User deleted successfully'));
         } catch(\Exception $e) {

@@ -244,15 +244,25 @@ class SeedController extends Controller
             $auth->addChild($role, $permission);
           }
 
-          if ($tables[$i] == 'article' or $tables[$i] == 'comment') {
-            $permission = $auth->createPermission( $tables[$i] . '-change-status' );
-            $permission->description = 'This user can change the register status on ' .$tables[$i] . ' table';
-            $auth->add($permission);
-            $auth->addChild($role, $permission);
+          if ($tables[$i] == 'article' or $tables[$i] == 'comment' or $tables[$i] == 'user') {
+            $permission_status = $auth->createPermission( $tables[$i] . '-change-status' );
+            $permission_status->description = 'This user can change the register status on ' .$tables[$i] . ' table';
+            $auth->add($permission_status);
+            $auth->addChild($role, $permission_status);
+            $auth->addChild($permission_status, $permission);
           }
 
           $this->stdout("roles and premissions for $tables[$i] have been created\n", Console::FG_GREEN);
         }
+        //------------------------------------------------------------------------------------------------
+
+        // user can update only their own registers
+        $rule = new \backend\rbac\AuthorRule;
+        $auth->add($rule);
+
+        // users can access only their own view
+        $rule = new \backend\rbac\MyselfRule;
+        $auth->add($rule);
 
         $transaction->commit();
 
