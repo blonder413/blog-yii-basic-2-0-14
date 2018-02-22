@@ -63,6 +63,10 @@ $config = [
                 ],
             ],
         ],
+        'authManager'       => [
+            'class'         => 'yii\rbac\DbManager',
+            'defaultRoles'  => ['guest'],
+        ],
         'db' => $db,
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
