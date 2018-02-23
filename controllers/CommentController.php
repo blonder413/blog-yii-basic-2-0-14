@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use backend\models\Comment;
-use backend\models\CommentSearch;
+use app\models\Comment;
+use app\models\CommentSearch;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
