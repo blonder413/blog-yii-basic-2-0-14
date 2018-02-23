@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     //    'defaultRoute' => 'site/about',
-//    'catchAll' => ['site/offline'],
+    //'catchAll' => ['site/offline'],
     'id'                => 'blonder413',
     'language'          => 'es-CO',
     'name'              => 'Blonder413 basic',

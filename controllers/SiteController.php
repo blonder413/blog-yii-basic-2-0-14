@@ -25,7 +25,7 @@ use yii\db\Expression;
 class SiteController extends Controller
 {
     public $layout = 'blue/main';
-    
+
     /**
      * {@inheritdoc}
      */
@@ -67,7 +67,7 @@ class SiteController extends Controller
             ],
         ];
     }
-    
+
     /**
      * find an article by slug
      * @param string $slug seo-slug of article
@@ -77,7 +77,7 @@ class SiteController extends Controller
     {
 //        $this->layout = 'blue/main';
         $article = Article::find()->where('slug = :slug', [':slug' => $slug])->one();
-        
+
         if (sizeof($article) == 0) {
             throw new NotFoundHttpException();
         }
@@ -118,7 +118,7 @@ class SiteController extends Controller
             $comment->client_ip     = Helper::getRealIP();
             $comment->client_port   = $_SERVER['REMOTE_PORT'];
             $comment->rel           = "nofollow";
-            
+
 //            if (!$comment->validate()) {
 //                Yii::$app->response->format = Response::FORMAT_JSON;
 //                return \yii\widgets\ActiveForm::validate($comment);
@@ -135,12 +135,12 @@ class SiteController extends Controller
                 '188.143.232.10',   '195.154.35.47',
                 '198.52.168.254',
             ];
-            
+
             $oldComment = Comment::find()->where(
                 "email = :email AND article_id = :article AND comment = :comment",
                 [ ":email" => Security::mcrypt($comment->email), ":article" => $comment->article_id, ":comment" => $comment->comment ]
             )->count();
-            
+
             if ( in_array($comment->client_ip, $blackList) or $oldComment > 0 ) {
                 $comment = new Comment(['scenario' => 'comment']);
                 Yii::$app->session->setFlash("success", "Gracias por su opinión. Su comentario será publicado una vez que sea moderado!");
@@ -229,6 +229,8 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+
+
     /**
      * Displays contact page.
      *
@@ -250,7 +252,7 @@ class SiteController extends Controller
             } else {
                 Yii::$app->session->setFlash("error", "el mensaje no pudo ser enviado");
             }
-            
+
             return $this->refresh();
         } else {
             return $this->render('contact', [
@@ -276,7 +278,7 @@ class SiteController extends Controller
             'most_visited'  => $most_visited,
         ]);
     }
-    
+
     /**
      * find all courses
      * @return objects array
@@ -296,7 +298,18 @@ class SiteController extends Controller
             ]
         );
     }
-    
+
+    /**
+     * Displays offline page.
+     *
+     * @return string
+     */
+    public function actionOffline()
+    {
+        $this->layout = false;
+        return $this->render('offline');
+    }
+
     /**
      * Displays portfolio page.
      *
@@ -315,7 +328,7 @@ class SiteController extends Controller
             ]
         );
     }
-    
+
     /**
      * Displays streaming page.
      *
