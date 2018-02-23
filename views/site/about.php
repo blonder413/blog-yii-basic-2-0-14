@@ -26,7 +26,7 @@ $this->registerJs($script);
 
     <figure>
         <p class="text-center">
-            
+
             <?php
             echo Lightbox::widget([
                 'files' => [
@@ -37,7 +37,7 @@ $this->registerJs($script);
                     ],
                 ]
             ]);
-            
+
             /*
             Modal::begin([
                 'header' => Html::img(
@@ -47,7 +47,7 @@ $this->registerJs($script);
                             'title'         => 'Jonathan Morales Salazar',
                         ]
                     ),
-                'toggleButton' =>   ['label' => 
+                'toggleButton' =>   ['label' =>
                                         Html::img(
                                             '@web/web/img/photo.jpg',
                                             [
@@ -74,19 +74,19 @@ $this->registerJs($script);
                     <!-- <span class="org">El Ejemplo S. A.</span> -->
                 </div>
                 <div>
-                    <span class="nickname">Blonder413</span> 
+                    <span class="nickname">Blonder413</span>
                 </div>
                 <div class="adr">
                 <!-- <span class="street-address">Calle falsa 1</span><br /> -->
-                    <span class="locality" title="La Dorada">La Dorada</span>, 
-                    <abbr class="region" title="Caldas">Caldas</abbr>, 
+                    <span class="locality" title="La Dorada">La Dorada</span>,
+                    <abbr class="region" title="Caldas">Caldas</abbr>,
                     <!-- <span class="postal-code">94301</span>, -->
                     <abbr class="country-name" title="Colombia">Colombia</abbr>
                 </div>
                 <!-- <li class="tel"><strong class="type" title="Teléfono del trabajo">Work</strong>: <span class="value">604-555-1234</span></li> -->
                     <!-- <li class="url"><strong class="type" title="Sitio web oficial del trabajo">Work</strong>: <a href="http://ejemplo.com/" title="Ejemplo.com" class="value">http://ejemplo.com/</a></li> -->
             </div>
-            <span class="negrita">Edad</span>: 30 años
+            <span class="negrita">Edad</span>: 32 años
             <br />
             <span class="negrita">Ocupación</span>: Ingeniero de Sistemas
             </p>
@@ -138,7 +138,7 @@ $this->registerJs($script);
             </a>
         </li>
     </ul>
-    
+
     <hr>
     <div class="row">
         <div class="col col-xs-12 col-md-6">
@@ -146,18 +146,18 @@ $this->registerJs($script);
             <script src="https://apis.google.com/js/platform.js" async defer>
               {lang: 'es-419'}
             </script>
-            
+
             <!-- Place this tag where you want the widget to render. -->
             <div class="g-page" data-href="//plus.google.com/u/0/114140664117985392477" data-rel="publisher"></div>
         </div>
         <div class="col col-xs-12 col-md-6">
             <!-- Place this tag where you want the widget to render. -->
             <div class="g-community" data-href="https://plus.google.com/communities/104747714155968688815"></div>
-            
+
             <!-- Place this tag after the last widget tag. -->
             <script type="text/javascript">
               window.___gcfg = {lang: 'es-419'};
-            
+
               (function() {
                 var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
                 po.src = 'https://apis.google.com/js/platform.js';
@@ -167,7 +167,7 @@ $this->registerJs($script);
         </div>
     </div>
     <hr>
-    
+
     <iframe width="700" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;t=h&amp;ll=5.459905,-74.660339&amp;spn=0.041012,0.054932&amp;z=14&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/?ie=UTF8&amp;t=h&amp;ll=5.459905,-74.660339&amp;spn=0.041012,0.054932&amp;z=14&amp;source=embed" style="color:#0000FF;text-align:left" target='_blank'>Ver mapa más grande</a></small>
 
     </div>

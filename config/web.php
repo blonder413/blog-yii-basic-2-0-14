@@ -47,6 +47,30 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'response' => [
+            'formatters' => [
+                'pdf' => [
+                    'class' => 'robregonm\pdf\PdfResponseFormatter',
+                    //'mode' => '', // Optional
+                    'format' => 'letter',  // Optional but recommended. http://mpdf1.com/manual/index.php?tid=184
+                    'defaultFontSize' => 0, // Optional
+                    'defaultFont' => '', // Optional
+                    'marginLeft' => 15, // Optional
+                    'marginRight' => 15, // Optional
+                    'marginTop' => 16, // Optional
+                    'marginBottom' => 16, // Optional
+                    'marginHeader' => 9, // Optional
+                    'marginFooter' => 9, // Optional
+                    //'orientation' => 'Landscape', // optional. This value will be ignored if format is a string value.
+                    'options' => [
+                        // mPDF Variables
+                        // 'fontdata' => [
+                            // ... some fonts. http://mpdf1.com/manual/index.php?tid=454
+                        // ]
+                    ]
+                ],
+            ]
+        ],
         'i18n' => [
             'translations' => [
                 'file-input*' => [
@@ -55,13 +79,7 @@ $config = [
                 ],
             ],
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
+        'mailer' => require(__DIR__ . '/mailer.php'),
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
