@@ -28,7 +28,7 @@ $(document).ready(function() {
 //        var id = $("#id").val();
         var pending = $pending;
         $("#result_ajax").load("index-ajax",{pending:pending},function(){});
-    }, 3000);
+    }, 1000 * 60 * 10); // 1000ms * 60seg * 10min = 10min
 
 });
 JS;
