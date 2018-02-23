@@ -108,6 +108,12 @@ composer require kartik-v/yii2-widget-growl "*"
 composer require dmstr/yii2-adminlte-asset "*"
 ```
 
+- 2amigos/yii2-file-input-widget  (https://packagist.org/packages/2amigos/yii2-file-input-widget)
+
+```
+composer require 2amigos/yii2-file-input-widget
+```
+
 --------------------------------------------------------
 
 - imanilchaudhari\rrssb\ShareBar

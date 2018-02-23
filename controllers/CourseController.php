@@ -197,7 +197,24 @@ class CourseController extends Controller
           throw new ForbiddenHttpException("Access denied");
         }
 
-        $this->findModel($id)->delete();
+        try{
+          $model = $this->findModel($id);
+          if($model->delete()) {
+            unlink('web/img/courses/' . $model->image);
+            Yii::$app->session->setFlash("success", Yii::t('app', "Course deleted successfully!"));
+          } else {
+            $errors = '';
+            foreach ($model->getErrors() as $key => $value) {
+                foreach ($value as $row => $field) {
+                    //Yii::$app->session->setFlash("danger", $field);
+                    $errors .= $field . "<br>";
+                }
+            }
+            Yii::$app->session->setFlash("danger", $errors);
+          }
+        } catch (\Exception $e) {
+          Yii::$app->session->setFlash("warning", Yii::t('app', "Course can't be deleted!"));
+        }
 
         return $this->redirect(['index']);
     }
