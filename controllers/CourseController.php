@@ -17,6 +17,8 @@ use yii\filters\VerbFilter;
  */
 class CourseController extends Controller
 {
+    public $layout = 'adminLTE/main';
+
     /**
      * @inheritdoc
      */

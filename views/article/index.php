@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php if (Yii::$app->user->can('article-create')): ?>
@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'commentsCount',
             'download_counter',
             //'course_id',
-            'created_by',
+            //'created_by',
             //'created_at',
             //'updated_by',
             //'updated_at',

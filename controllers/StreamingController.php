@@ -15,6 +15,8 @@ use yii\filters\VerbFilter;
  */
 class StreamingController extends Controller
 {
+    public $layout = 'adminLTE/main';
+    
     /**
      * @inheritdoc
      */

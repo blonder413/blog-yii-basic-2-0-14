@@ -17,6 +17,8 @@ use app\models\Helper;
  */
 class UserController extends Controller
 {
+    public $layout = 'adminLTE/main';
+    
     /**
      * @inheritdoc
      */

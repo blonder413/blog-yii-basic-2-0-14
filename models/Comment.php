@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use app\models\Security;
 
 use Yii;
 
@@ -25,9 +26,9 @@ class Comment extends \yii\db\ActiveRecord
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
-    
+
     public $verifyCode;
-    
+
     /**
      * @inheritdoc
      */
@@ -79,6 +80,30 @@ class Comment extends \yii\db\ActiveRecord
             'client_port' => Yii::t('app', 'Client Port'),
             'verifyCode'    => Yii::t('app', 'Verify Code'),
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        /*
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->email = Security::mcrypt($this->email);
+            }
+
+            return true;
+        }
+        */
+
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->email = Security::mcrypt($this->email);
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**

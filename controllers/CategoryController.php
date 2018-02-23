@@ -17,6 +17,8 @@ use yii\filters\VerbFilter;
  */
 class CategoryController extends Controller
 {
+    public $layout = 'adminLTE/main';
+
     /**
      * @inheritdoc
      */

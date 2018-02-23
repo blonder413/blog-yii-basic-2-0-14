@@ -111,19 +111,19 @@ class Article extends ActiveRecord
     public function behaviors()
     {
         return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => new Expression('NOW()'),
-            ],
-            'blameable' => [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
+//            'timestamp' => [
+//                'class' => 'yii\behaviors\TimestampBehavior',
+//                'attributes' => [
+//                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+//                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+//                ],
+//                'value' => new Expression('NOW()'),
+//            ],
+//            'blameable' => [
+//                'class' => BlameableBehavior::className(),
+//                'createdByAttribute' => 'created_by',
+//                'updatedByAttribute' => 'updated_by',
+//            ],
             [
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'title',
@@ -140,14 +140,14 @@ class Article extends ActiveRecord
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->status = self::STATUS_ACTIVE;
-//                $this->created_by = Yii::$app->user->id;
-//                $this->created_at = new Expression('NOW()');
-//                $this->updated_by = Yii::$app->user->id;
-//                $this->updated_at = new Expression('NOW()');
+                $this->created_by = Yii::$app->user->id;
+                $this->created_at = new Expression('NOW()');
+                $this->updated_by = Yii::$app->user->id;
+                $this->updated_at = new Expression('NOW()');
             } else {
                 if ( isset( Yii::$app->user->id ) ) {
-//                    $this->updated_by = Yii::$app->user->id;
-//                    $this->updated_at = new \yii\db\Expression('NOW()');
+                    $this->updated_by = Yii::$app->user->id;
+                    $this->updated_at = new \yii\db\Expression('NOW()');
                 }
             }
             return true;

@@ -10,6 +10,10 @@ rename ```config/db-example.php``` to ```config/db.php``` and use real data,
 rename ```config/mailer-example.php``` to ```config/mailer.php``` and use real data,
 rename ```config/params-example.php``` to ```config/params.php``` and use real data.
 
+Also is important you configure ```config\params.php```,
+specially ```securityKey```, this is the secure key for email encryptation
+from user comments
+
 ### Database and Seeder
 
 Configure db Connection in ```config/db.php``` and
@@ -43,6 +47,12 @@ The CSS files for frontend layouts is en ```web\css\layout_name```
 where ```layout_name``` is the name of the folder layout in ```views\layouts```
 The images for layouts must be in ```web\img``` folder
 
+### turn on maintenance
+
+When you need to do changes in the web, you can turn on maintenance mode,
+for that you need uncomment ```catchAll``` key on ```config/web.php``` file.
+The file ```views/site/offline.php``` will be rendering, you can personalize this page
+and change the page you want to be rendering in ```config/web.php``` on ```catchAll``` key.
 
 ### Extensions
 
@@ -86,14 +96,21 @@ composer require 2amigos/yii2-date-picker-widget:~1.0
 composer require kartik-v/yii2-widget-alert "*"
 ```
 
+- yii2-widget-growl (http://demos.krajee.com/widget-details/growl)
+
+```
+composer require kartik-v/yii2-widget-growl "*"
+```
+
+- Yii 2.0: yii2-adminlte-asset (http://www.yiiframework.com/extension/yii2-adminlte-asset/)
+
+```
+composer require dmstr/yii2-adminlte-asset "*"
+```
 
 --------------------------------------------------------
 
 - imanilchaudhari\rrssb\ShareBar
-- Growl alert (https://github.com/kartik-v/yii2-widget-alert)
-```
-composer require kartik-v/yii2-widget-growl "*"
-```
 - branchonline\lightbox\Lightbox (https://packagist.org/packages/branchonline/yii2-lightbox)
 - kartik\file\FileInput;
 ```
