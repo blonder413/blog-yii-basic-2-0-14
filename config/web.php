@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     //    'defaultRoute' => 'site/about',
-    //'catchAll' => ['site/offline'],
+    'catchAll' => ['site/offline'],
     'id'                => 'blonder413',
     'language'          => 'es-CO',
     'name'              => 'Blonder413 basic',
@@ -39,6 +39,26 @@ $config = [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        /**
+         * http://www.yiiframework.com/doc-2.0/guide-runtime-sessions-cookies.html
+         * The default yii\web\Session class stores session data as files on the server.
+         * Yii also provides the following session classes implementing different session storage:
+         *  - yii\web\DbSession: stores session data in a database table.
+         *  - yii\web\CacheSession: stores session data in a cache with the help of a configured cache component.
+         *  - yii\redis\Session: stores session data using redis as the storage medium.
+         *  - yii\mongodb\Session: stores session data in a MongoDB.
+         */
+        'session' => [
+            'class' => 'yii\web\DbSession',
+            // 'timeout' => 10, segundos de inactividad para expirar la sesión
+
+            // Set the following if you want to use DB component other than
+            // default 'db'.
+            // 'db' => 'mydb',
+
+            // To override default session table, set the following
+            'sessionTable' => 'sessions',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -92,6 +112,16 @@ $config = [
         'authManager'       => [
             'class'         => 'yii\rbac\DbManager',
             'defaultRoles'  => ['guest'],
+//            'itemTable'         => 'auth_item',         // tabla para guardar objetos de autorización
+//            'itemChildTable'    => 'auth_item_child',   // tabla para almacenar jerarquía elemento autorización
+//            'assignmentTable'   => 'auth_assignment',   // tabla para almacenar las asignaciones de elementos de autorización
+//            'ruleTable'         => 'auth_rule',         // tabla para almacenar reglas
+        ],
+		    'formatter' => [
+            'class' => '\yii\i18n\Formatter',
+            'thousandSeparator' => '.',
+            'decimalSeparator' => ',',
+            'currencyCode' => '$'
         ],
         'db' => $db,
         'urlManager' => [
