@@ -13,18 +13,18 @@ echo GridView::widget([
             'id',
             'name',
             // 'email:email',
-            [
-                'attribute' => 'email',
-                'format'    => 'email',
-                'value'     => function ($searchModel) {
-                    return Security::decrypt($searchModel->email);
-                }
-            ],
+//            [
+//                'attribute' => 'email',
+//                'format'    => 'email',
+//                'value'     => function ($searchModel) {
+//                    return Security::decrypt($searchModel->email);
+//                }
+//            ],
             // 'web',
-            [
-                'attribute' => 'web',
-                'format'    => 'url',
-            ],
+//            [
+//                'attribute' => 'web',
+//                'format'    => 'url',
+//            ],
             // 'rel',
             'comment:ntext',
             // 'date',

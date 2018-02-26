@@ -53,17 +53,17 @@ class ContactForm extends Model
     public function contact($email)
     {
 
-            return Yii::$app->mailer->compose()
-                ->setTo($email)
-                ->setFrom([$this->email => $this->name])
-                ->setSubject($this->subject)
+//            return Yii::$app->mailer->compose()
+//                ->setTo($email)
+//                ->setFrom([$this->email => $this->name])
+//                ->setSubject($this->subject)
 //                ->setHtmlBody('<b>HTML content</b>')
 //                ->setTextBody($this->body)
-                ->setHtmlBody($this->body)
-                ->send();
+//                ->setHtmlBody($this->body)
+//                ->send();
 
             //envío el correo
-/*
+
             $from = $this->name . "<info@blonder413.com>";
             $subject = "Contacto desde mi Web";
             $body = "
@@ -88,9 +88,9 @@ class ContactForm extends Model
             $sheader=$sheader."Mime-Version: 1.0\n";
             $sheader=$sheader."Content-Type: text/html";
 
-            mail("blonder413@outlook.com",$subject,$body,$sheader);
+            mail(Yii::$app->params['supportEmail'], $subject, $body, $sheader);
 
             return true;
-*/
+
     }
 }

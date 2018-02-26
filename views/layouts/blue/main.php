@@ -15,17 +15,17 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    
+
     <meta name='author' content='Jonathan Morales Salazar'>
     <meta name='copyright' content='www.blonder413.com'>
     <meta name='designer' content='www.blonder413.com'>
     <meta name='publisher' content='www.blonder413.com'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <?php if (isset($this->params['description'])): ?>
     <meta name="description" content="<?= $this->params['description']; ?>">
     <?php endif; ?>
-        
+
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -34,10 +34,10 @@ AppAsset::register($this);
     <!--<link rel="image_src" href="<?php //echo Yii::$app->homeUrl . 'web/img/' . $this->image_src . '.png' ?>">-->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="alternate" type="application/rss+xml" title="RSS feed" href="/rss.xml" />
-    
+
     <link rel="canonical" href="/web/tweet-button">
     <link rel="me" href="https://twitter.com/blonder413">
-    
+
     <!-- Registro en Google -->
     <!-- Put the following javascript before the closing </head> tag. -->
     <script>
@@ -53,7 +53,7 @@ AppAsset::register($this);
         })();
     </script>
     <!-- /Registro en Google -->
-    
+
 </head>
 <body>
 
@@ -225,7 +225,7 @@ AppAsset::register($this);
             ]) ?>
             <?= $content ?>
         </section>
-        
+
         <!--Sidebar-->
         <aside class="hidden-xs hidden-sm col-md-3">
             <div class="panel panel-primary">
@@ -236,13 +236,13 @@ AppAsset::register($this);
                         '@google+',
                         ['target' => '_blank', 'title'  => 'Mi perfil en Google+']
                     ) ?>
-            
+
                     <?= Html::a(
                         Html::img("@web/web/img/twitter-c.png", ['class'=>'img-thumbnail','width' => '50', 'alt' => 'Mi perfil en Twitter']),
                         '@twitter',
                         ['target' => '_blank', 'title'  => 'Mi perfil en Twitter']
                     ) ?>
-            
+
                     <?php /* echo Html::a(
                         Html::img("@web/web/img/facebook-c.png", ['class'=>'img-thumbnail','width' => '50', 'alt' => 'Mi biografía en Facebook']),
                         '@facebook',
@@ -254,25 +254,25 @@ AppAsset::register($this);
                         '@youtube',
                         ['target' => '_blank', 'title'  => 'Mi canal de youtube']
                     ) ?>
-                    
+
                     <?= Html::a(
                         Html::img("@web/web/img/github-c.png", ['class'=>'img-thumbnail','width' => '50', 'alt' => 'Mi repositorio en Github']),
                         '@github',
                         ['target' => '_blank', 'title'  => 'Mi repositorio en Github']
                     ) ?>
-            
+
                     <?php /*echo Html::a(
                         Html::img("@web/web/img/linked-in-c.png", ['class'=>'img-thumbnail','width' => '50', 'alt' => 'Mi perfil en LinkedIn']),
                         '@linkedin',
                         ['target' => '_blank', 'title'  => 'Mi perfil en LinkedIn']
                     )*/ ?>
-            
+
                     <?php /*echo Html::a(
                         Html::img("@web/web/img/delicious-c.png", ['class'=>'img-thumbnail','width' => '50', 'alt' => 'Mi enlaces en Delicious']),
                         '@delicious',
                         ['target' => '_blank', 'title'  => 'Mi enlaces en Delicious']
                     )*/ ?>
-            
+
                     <?= Html::a(
                         Html::img("@web/web/img/rss-c.png", ['class'=>'img-thumbnail','width' => '50', 'alt' => 'Mis Feeds RSS']),
                         ['/rss.xml'],
@@ -326,7 +326,7 @@ AppAsset::register($this);
                 <div class="panel-heading">Webs Amigas</div>
                 <div class="list-group">
                     <div class="list-group">
-                
+
                         <?= Html::a(
                             Html::img("@web/web/img/webs/blonder413-blogspot.png", ['width' => '35']) . " Blonder413 - Blogger",
                             'http://blonder413.blogspot.com/',
@@ -335,7 +335,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         ) ?>
-                        
+
                         <?= Html::a(
                             Html::img("@web/web/img/webs/blonder413-wordpress.png", ['width' => '35']) . " Blonder413 - Wordpress",
                             'http://blonder413.wordpress.com/',
@@ -344,7 +344,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         ) ?>
-                
+
                         <?= Html::a(
                             Html::img("@web/web/img/webs/cesarcancino.png", ['width' => '35']) . " WebMaster César Cancino",
                             'http://www.cesarcancino.com/',
@@ -353,7 +353,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         ) ?>
-                
+
                         <?= Html::a(
                             Html::img("@web/web/img/webs/oscar-gomez.png", ['width' => '35']) . " Oscar Gómez",
                             'http://www.oscar-gomez.net',
@@ -362,7 +362,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         ) ?>
-                
+
                         <?= Html::a(
                             Html::img("@web/web/img/webs/keyphercom.png", ['width' => '35']) . " Keyphercom",
                             'http://www.keyphercom.com/',
@@ -371,7 +371,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         ) ?>
-                
+
                         <?= Html::a(
                             Html::img("@web/web/img/webs/tecnodidactas.png", ['width' => '35']) . " Tecnodidactas",
                             'http://www.tecnodidactas.com/',
@@ -380,7 +380,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         ) ?>
-                
+
                         <?php /* echo Html::a(
                             Html::img("@web/web/img/webs/midas-ingenieria.png", ['width' => '35']) . " Midas Ingeniería",
                             'http://midasingenieria.com/',
@@ -389,7 +389,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         )*/ ?>
-                
+
                         <?php /* echo Html::a(
                             Html::img("@web/web/img/webs/directorio-ladorada.png", ['width' => '35']) . " Directorio La Dorada",
                             'http://www.directorioladorada.com/',
@@ -398,7 +398,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         )*/ ?>
-                
+
                         <?= Html::a(
                             Html::img("@web/web/img/webs/manos-en-el-codigo.png", ['width' => '35']) . " Manos en el código",
                             'http://www.manosenelcodigo.com/',
@@ -407,7 +407,7 @@ AppAsset::register($this);
                                 'target'    => '_blank',
                             ]
                         ) ?>
-                
+
                     </div>
                 </div>
             </div>
@@ -455,9 +455,8 @@ AppAsset::register($this);
       b.parentNode.insertBefore(m,b)})("reEmbed","script",window,document,"api");
     </script>
     <!-- /Diseño del reproductor de videos -->
-    
+
     <!-- Smartsupp Live Chat script -->
-<!-- --------------------------------- BORRAR ESTA LÍNEA -----------------------------------------------
     <script type="text/javascript">
     var _smartsupp = _smartsupp || {};
     _smartsupp.key = '1388fee2a7b9efb38a5ff5a6421028fdaa9c370f';

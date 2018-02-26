@@ -11,6 +11,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\PasswordResetRequestForm;
+use app\models\ResetPasswordForm;
 
 use app\models\Article;
 use app\models\Category;
