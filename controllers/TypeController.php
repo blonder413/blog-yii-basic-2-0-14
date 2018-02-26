@@ -8,6 +8,7 @@ use app\models\TypesSearch;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -16,13 +17,29 @@ use yii\filters\VerbFilter;
 class TypeController extends Controller
 {
     public $layout = 'adminLTE/main';
-    
+
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+  //                'only' => ['index', 'view', 'create', 'delete','update', 'approve'],
+                'rules' => [
+  //                    [
+  //                        'allow' => true,
+  //                        'actions' => ['index'],
+  //                        'roles' => ['?'],
+  //                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

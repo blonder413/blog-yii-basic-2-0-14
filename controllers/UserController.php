@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\filters\AccessControl;
 use app\models\Helper;
 
 /**
@@ -25,6 +26,22 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+  //                'only' => ['index', 'view', 'create', 'delete','update', 'approve'],
+                'rules' => [
+  //                    [
+  //                        'allow' => true,
+  //                        'actions' => ['index'],
+  //                        'roles' => ['?'],
+  //                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'change-status', 'update', 'delete'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

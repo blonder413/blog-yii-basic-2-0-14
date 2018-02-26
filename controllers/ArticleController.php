@@ -8,6 +8,7 @@ use app\models\ArticleSearch;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -23,6 +24,22 @@ class ArticleController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+    //                'only' => ['index', 'view', 'create', 'delete','update', 'approve'],
+                'rules' => [
+    //                    [
+    //                        'allow' => true,
+    //                        'actions' => ['index'],
+    //                        'roles' => ['?'],
+    //                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'change-status', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

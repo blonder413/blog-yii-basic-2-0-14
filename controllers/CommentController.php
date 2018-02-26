@@ -8,6 +8,7 @@ use app\models\CommentSearch;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -23,6 +24,22 @@ class CommentController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+//                'only' => ['index', 'view', 'create', 'delete','update', 'approve'],
+                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'actions' => ['index'],
+//                        'roles' => ['?'],
+//                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'index-ajax', 'view', 'create', 'update', 'delete', 'approve'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
