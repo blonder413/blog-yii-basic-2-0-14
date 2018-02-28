@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'commentsCount',
             'download_counter',
             //'course_id',
-            //'created_by',
+            'created_by',
             //'created_at',
             //'updated_by',
             //'updated_at',
