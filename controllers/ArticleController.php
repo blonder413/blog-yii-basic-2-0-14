@@ -129,6 +129,7 @@ class ArticleController extends Controller
       }
 
       $model = new Article();
+      $model->loadDefaultValues();
 
       if ($model->load(Yii::$app->request->post())) {
 
