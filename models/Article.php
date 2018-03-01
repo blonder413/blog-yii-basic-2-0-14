@@ -62,7 +62,7 @@ class Article extends ActiveRecord
     {
       return [
           [['number', 'type_id', 'category_id', 'visit_counter', 'download_counter', 'course_id', 'created_by', 'updated_by'], 'integer'],
-          [['title', 'slug', 'detail', 'abstract', 'type_id', 'category_id', 'tags'], 'required'],
+          [['title', 'slug', 'detail', 'abstract', 'type_id', 'category_id', 'tags', 'version'], 'required'],
           [['detail'], 'string'],
           [['created_at', 'updated_at'], 'safe'],
           [['title', 'slug'], 'string', 'max' => 150],
@@ -155,6 +155,25 @@ class Article extends ActiveRecord
         return false;
     }
 
+    public function optimisticLock()
+    {
+      return 'version';
+    }
+
+    /**
+     * @inheritdoc
+     */
+/*
+    public function transactions()
+    {
+        return [
+            'create' => self::OP_INSERT,
+            'api' => self::OP_INSERT | self::OP_UPDATE | self::OP_DELETE,
+            // the above is equivalent to the following:
+            // 'api' => self::OP_ALL,
+        ];
+    }
+*/
     /**
      * @return \yii\db\ActiveQuery
      */

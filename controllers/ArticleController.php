@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Article;
 use app\models\ArticleSearch;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -163,7 +164,10 @@ class ArticleController extends Controller
               $transaction->commit();
 
               return $this->redirect(['index']);
-          } catch (\Exception $e) {
+          } catch (\Exception $e) {           // PHP 5
+              $transaction->rollBack();
+              throw $e;
+          } catch(\Throwable $e) {            // PHP 7
               $transaction->rollBack();
               throw $e;
           }
@@ -190,7 +194,31 @@ class ArticleController extends Controller
             throw new ForbiddenHttpException("Access denied");
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+          $transaction = Yii::$app->db->beginTransaction();
+
+          try {
+
+            if ($model->update()) {
+                Yii::$app->session->setFlash("success","Article udpated successfully!");
+            } else {
+                $errors = '';
+                foreach ($model->getErrors() as $key => $value) {
+                    foreach ($value as $row => $field) {
+                        //Yii::$app->session->setFlash("danger", $field);
+                        $errors .= $field . "<br>";
+                    }
+                }
+
+                Yii::$app->session->setFlash("danger", $errors);
+            }
+
+            $transaction->commit();
+          } catch (StaleObjectException $e) {
+              $transaction->rollBack();
+              Yii::$app->session->setFlash("danger","Data was updated while you were editing!");
+          }
             return $this->redirect(['index']);
         }
 
