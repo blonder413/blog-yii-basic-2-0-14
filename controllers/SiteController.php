@@ -257,7 +257,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Article::find();
+        $query = Article::find()->active();
 
         $pagination = new Pagination([
             'defaultPageSize'   => 20,

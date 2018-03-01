@@ -155,6 +155,11 @@ class Article extends ActiveRecord
         return false;
     }
 
+    public static function find()
+    {
+        return new ArticleQuery(get_called_class());
+    }
+
     public function optimisticLock()
     {
       return 'version';
